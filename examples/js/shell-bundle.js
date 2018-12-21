@@ -123,7 +123,16 @@
 			this.type = 'shell'
 
 			if (genes) {
-				_.extend(this, genes)
+	                        this.opening = genes.opening
+	                        this.displacement = genes.displacement
+	                        this.shape = genes.shape
+	                        this.translation = genes.translation
+	                        this.coarsegraininess = genes.coarsegraininess
+	                        this.reach = genes.reach
+	                        this.pattern = genes.pattern
+	                        this.handedness = genes.handedness
+	                        this.translationGradient = genes.translationGradient
+
 				this.generate()
 			}
 			else {
@@ -132,192 +141,210 @@
 		}
 
 		Shell.prototype.randomize = function () {
-
-			_.extend(this, Shell.randomGenes())
+		        var genes = Shell.randomGenes()
+                        this.opening = genes.opening
+                        this.displacement = genes.displacement
+                        this.shape = genes.shape
+                        this.translation = genes.translation
+                        this.coarsegraininess = genes.coarsegraininess
+                        this.reach = genes.reach
+                        this.pattern = genes.pattern
+                        this.handedness = genes.handedness
+                        this.translationGradient = genes.translationGradient
+		        
 			this.generate()
 		}
 
 		Shell.prototype.resetCentre = function () {
+                    this.centre = { x: this.origin.x, y: this.origin.y }
 
-			this.centre = _.cloneDeep(this.origin)
 		}
 
+		Shell.random = function(lower, upper, dummy) {
+		    return Math.random() * (upper - lower) + lower
+		}
+		
+		Shell.randomSign = function() {
+		    if(Math.random() < 0.5) return -1
+		    else return 1;
+		}
+		
 		// This produces a random set of genes which have visually
 		// pleasing characteristics (most of the time)
 		// Each shape has a different set of boundaries to make them look better
 		Shell.randomGenes = function () {
 
 			var basicSnail = {
-				opening: _.random(1.5, 6.50, true),
-				displacement: _.random(0, 0.1, true),
-				shape: _.random(0.8, 1.8, true),
-				translation: _.random(0, 4, true),
-				coarsegraininess: _.random(4, 8),
-				reach: _.random(3, 5, true),
+				opening: Shell.random(1.5, 6.50, true),
+				displacement: Shell.random(0, 0.1, true),
+				shape: Shell.random(0.8, 1.8, true),
+				translation: Shell.random(0, 4, true),
+				coarsegraininess: Shell.random(4, 8),
+				reach: Shell.random(3, 5, true),
 				pattern: "circle",
-				handedness: _.sample([1, -1]),
+				handedness: Shell.randomSign(),
 				translationGradient: 1,
 			}
 
 			var Babylon = {
-				opening: _.random(100, 1000, true),
-				displacement: _.random(0, 0.25, true),
-				shape: _.random(2, 5, true),
-				translation:_.random(0, 0.3, true),
-				coarsegraininess: _.random(1.5, 3),
-				reach: _.random(2, 3),
+				opening: Shell.random(100, 1000, true),
+				displacement: Shell.random(0, 0.25, true),
+				shape: Shell.random(2, 5, true),
+				translation:Shell.random(0, 0.3, true),
+				coarsegraininess: Shell.random(1.5, 3),
+				reach: Shell.random(2, 3),
 				pattern: "babylon",
-				handedness: _.sample([1, -1]),
-				translationGradient: _.random(1, 8),
+				handedness: Shell.randomSign(),
+				translationGradient: Shell.random(1, 8),
 			}
 
 			var Angel = {
-				opening: _.random(100, 1000, true),
-				displacement: _.random(0, 0.25, true),
-				shape: _.random(2, 5, true),
-				translation:_.random(0, 0.3, true),
-				coarsegraininess: _.random(1, 2.5),
-				reach: _.random(2, 3),
+				opening: Shell.random(100, 1000, true),
+				displacement: Shell.random(0, 0.25, true),
+				shape: Shell.random(2, 5, true),
+				translation:Shell.random(0, 0.3, true),
+				coarsegraininess: Shell.random(1, 2.5),
+				reach: Shell.random(2, 3),
 				pattern: "angel",
-				handedness: _.sample([1, -1]),
-				translationGradient: _.random(1, 8),
+				handedness: Shell.randomSign(),
+				translationGradient: Shell.random(1, 8),
 			}
 
 			var Oyster = {
-				opening: _.random(100, 1000, true),
-				displacement: _.random(0, 0.2, true),
-				shape: _.random(2, 5, true),
-				translation: _.random(0, 1.5, true),
-				coarsegraininess: _.random(3, 4, true),
-				reach: _.random(2, 3, true),
+				opening: Shell.random(100, 1000, true),
+				displacement: Shell.random(0, 0.2, true),
+				shape: Shell.random(2, 5, true),
+				translation: Shell.random(0, 1.5, true),
+				coarsegraininess: Shell.random(3, 4, true),
+				reach: Shell.random(2, 3, true),
 				pattern: "oyster",
-				handedness: _.sample([-1, 1]),
-				translationGradient: _.random(0.5, 1.5, true),
+				handedness: Shell.randomSign(),
+				translationGradient: Shell.random(0.5, 1.5, true),
 			}
 
-			// BIVALVE AND BRACHIOPOD _.random
+			// BIVALVE AND BRACHIOPOD Shell.random
 			var Bivalve = {
-				opening: _.random(20, 1000, true),
-				displacement: _.random(0, 0.25, true),
-				shape: _.random(1.5, 4, true),
-				translation:_.random(0, 0.3, true),
-				coarsegraininess: _.random(1.5, 3),
-				reach: _.random(2.2, 4, true),
+				opening: Shell.random(20, 1000, true),
+				displacement: Shell.random(0, 0.25, true),
+				shape: Shell.random(1.5, 4, true),
+				translation:Shell.random(0, 0.3, true),
+				coarsegraininess: Shell.random(1.5, 3),
+				reach: Shell.random(2.2, 4, true),
 				pattern: "circle",
-				handedness: _.sample([1, -1]),
-				translationGradient: _.random(1, 5, true),
+				handedness: Shell.randomSign(),
+				translationGradient: Shell.random(1, 5, true),
 			}
 
 			var Cone = {
-				opening: _.random(1.3, 5, true),
-				displacement: _.random(0, 0.5, true),
-				shape: _.random(1, 5, true),
-				translation: _.random(2.5, 4.5, true),
-				coarsegraininess: _.random(2, 5, true),
-				reach: _.random(2, 7, true),
+				opening: Shell.random(1.3, 5, true),
+				displacement: Shell.random(0, 0.5, true),
+				shape: Shell.random(1, 5, true),
+				translation: Shell.random(2.5, 4.5, true),
+				coarsegraininess: Shell.random(2, 5, true),
+				reach: Shell.random(2, 7, true),
 				pattern: "whelk",
-				handedness: _.sample([-1, 1]),
+				handedness: Shell.randomSign(),
 				translationGradient: 1,
 			}
 
 			var Scallop = {
-				opening: _.random(100, 1000, true),
+				opening: Shell.random(100, 1000, true),
 				displacement: 0,
-				shape: _.random(1, 6, true),
-				translation: _.random(0, 1, true),
-				coarsegraininess: _.random(2, 3.5, true),
+				shape: Shell.random(1, 6, true),
+				translation: Shell.random(0, 1, true),
+				coarsegraininess: Shell.random(2, 3.5, true),
 				reach: 3,
 				pattern: "scallop",
-				handedness: _.sample([-1, 1]),
-				translationGradient: _.random(0, 2, true),
+				handedness: Shell.randomSign(),
+				translationGradient: Shell.random(0, 2, true),
 			}
 
 			var Eloise = {
-				opening: _.random(1.3, 2.5, true),
-				displacement: _.random(0, 0.3, true),
-				shape: _.random(1.5, 2, true),
-				translation: _.random(1.5, 3, true),
-				coarsegraininess: _.random(2.5, 5, true),
-				reach: _.random(2, 5, true),
+				opening: Shell.random(1.3, 2.5, true),
+				displacement: Shell.random(0, 0.3, true),
+				shape: Shell.random(1.5, 2, true),
+				translation: Shell.random(1.5, 3, true),
+				coarsegraininess: Shell.random(2.5, 5, true),
+				reach: Shell.random(2, 5, true),
 				pattern: "eloise",
-				handedness: _.sample([-1, 1]),
-				translationGradient: _.random(1, 1.5, true),
+				handedness: Shell.randomSign(),
+				translationGradient: Shell.random(1, 1.5, true),
 			}
 
 			var Gallaghers = {
-				opening: _.random(1.4, 2, true),
-				displacement: _.random(0, 0.1, true),
-				shape: _.random(1.4, 2, true),
-				translation: _.random(2, 6, true),
-				coarsegraininess: _.random(3, 5, true),
-				reach: _.random(3, 6, true),
+				opening: Shell.random(1.4, 2, true),
+				displacement: Shell.random(0, 0.1, true),
+				shape: Shell.random(1.4, 2, true),
+				translation: Shell.random(2, 6, true),
+				coarsegraininess: Shell.random(3, 5, true),
+				reach: Shell.random(3, 6, true),
 				pattern: "gallaghers",
-				handedness: _.sample([-1, 1]),
-				translationGradient: _.random(0.5, 1, true),
+				handedness: Shell.randomSign(),
+				translationGradient: Shell.random(0.5, 1, true),
 			}
 
 			var Rapa = {
-				opening: _.random(1.4, 6, true),
-				displacement: _.random(0, 0.12, true),
-				shape: _.random(1.8, 2.7, true),
-				translation: _.random(0.1, 2.6, true),
-				coarsegraininess: _.random(3, 6, true),
+				opening: Shell.random(1.4, 6, true),
+				displacement: Shell.random(0, 0.12, true),
+				shape: Shell.random(1.8, 2.7, true),
+				translation: Shell.random(0.1, 2.6, true),
+				coarsegraininess: Shell.random(3, 6, true),
 				reach: 9,
 				pattern: "rapa",
-				handedness: _.sample([-1, 1]),
-				translationGradient: _.random(0.8, 1.5, true),
+				handedness: Shell.randomSign(),
+				translationGradient: Shell.random(0.8, 1.5, true),
 			}
 
 			var Lightning = {
-				opening: _.random(1.4, 2.2, true),
-				displacement: _.random(0, 0.3, true),
-				shape: _.random(2.5, 5, true),
-				translation: _.random(2, 4.5, true),
-				coarsegraininess: _.random(3, 6, true),
-				reach: _.random(2, 6, true),
+				opening: Shell.random(1.4, 2.2, true),
+				displacement: Shell.random(0, 0.3, true),
+				shape: Shell.random(2.5, 5, true),
+				translation: Shell.random(2, 4.5, true),
+				coarsegraininess: Shell.random(3, 6, true),
+				reach: Shell.random(2, 6, true),
 				pattern: "lightning",
-				handedness: _.sample([-1, 1]),
-				translationGradient: _.random(0.8, 1.2, true),
+				handedness: Shell.randomSign(),
+				translationGradient: Shell.random(0.8, 1.2, true),
 			}
 
 			var Fig = {
-				opening: _.random(1.5, 4, true),
-				displacement: _.random(0, 0.1, true),
-				shape: _.random(2, 4, true),
-				translation: _.random(0, 4, true),
-				coarsegraininess: _.random(2, 4, true),
-				reach: _.random(3, 8, true),
+				opening: Shell.random(1.5, 4, true),
+				displacement: Shell.random(0, 0.1, true),
+				shape: Shell.random(2, 4, true),
+				translation: Shell.random(0, 4, true),
+				coarsegraininess: Shell.random(2, 4, true),
+				reach: Shell.random(3, 8, true),
 				pattern: "tun",
-				handedness: _.sample([-1, 1]),
-				translationGradient: _.random(0.9, 1.1, true),
+				handedness: Shell.randomSign(),
+				translationGradient: Shell.random(0.9, 1.1, true),
 			}
 
 			var RazorShell = {
-				opening: _.random(100, 1000, true),
+				opening: Shell.random(100, 1000, true),
 				displacement: -0.15,
-				shape: _.random(4, 6, true),
-				translation: _.random(4, 6.2, true),
-				coarsegraininess: _.random(2, 3, true),
-				reach: _.random(1, 3, true),
+				shape: Shell.random(4, 6, true),
+				translation: Shell.random(4, 6.2, true),
+				coarsegraininess: Shell.random(2, 3, true),
+				reach: Shell.random(1, 3, true),
 				pattern: "razor",
-				handedness: _.sample([-1, 1]),
+				handedness: Shell.randomSign(),
 				translationGradient: 1,
 			}
 
 			var JapaneseWonder = {
-				opening: _.random(1.4, 2, true),
-				displacement: _.random(-0.2, 0.05, true),
-				shape: _.random(1, 3, true),
-				translation: _.random(3.5, 6, true),
-				coarsegraininess: _.random(2, 5, true),
-				reach: _.random(6, 10, true),
+				opening: Shell.random(1.4, 2, true),
+				displacement: Shell.random(-0.2, 0.05, true),
+				shape: Shell.random(1, 3, true),
+				translation: Shell.random(3.5, 6, true),
+				coarsegraininess: Shell.random(2, 5, true),
+				reach: Shell.random(6, 10, true),
 				pattern: "wonder",
-				handedness: _.sample([-1, 1]),
-				translationGradient: _.random(0.9, 1.2, true),
+				handedness: Shell.randomSign(),
+				translationGradient: Shell.random(0.9, 1.2, true),
 			}
-
+			var choices = [basicSnail, Oyster, Bivalve, Cone, Scallop, Eloise, Gallaghers, Rapa, Lightning, Fig, RazorShell, JapaneseWonder]
 			//Babylon and Angel aren't used because they're very similar to Bivalves
-			return _.sample([basicSnail, Oyster, Bivalve, Cone, Scallop, Eloise, Gallaghers, Rapa, Lightning, Fig, RazorShell, JapaneseWonder])
+			return choices[Math.trunc(Math.random() * choices.length)]
 		}
 
 		// This is a hash of patterns. Each shape is a set of 2D coordinates relative to the first point.
@@ -429,11 +456,13 @@
 			// Calculate ratios of sizeWeWant/sizeItWas
 			var wRatio = w/shape.w
 			var hRatio = h/shape.h
-
-			// Scale every point in the shape by the the ratios (creates a new array)
-			return _.map(shape.points, function (p) {
-				return [p[0] * wRatio * invert, p[1] * hRatio]
-			})
+			
+                        // Scale every point in the shape by the the ratios (creates a new array)
+			var scaled = []
+			
+			for(i = 0; i < shape.points.length; i++) 
+			    scaled.push([shape.points[i][0] * wRatio * invert, shape.points[i][1] * hRatio])
+			return scaled
 		}
 
 		Shell.prototype.verticalOffset = function () {
@@ -634,7 +663,7 @@
 			
 			var mutSize = 0.4
 			var logged = Math.log(opening)
-			var logchanged = logged + mutSize * _.sample([-1, 1])
+			var logchanged = logged + mutSize * Shell.randomSign()
 
 			if (logchanged > 20) {
 				logchanged = 20
@@ -650,9 +679,30 @@
 		}
 
 		Shell.prototype.getGenes = function () {
-			return _.cloneDeep(_.pick(this, ['pattern', 'shape', 'displacement', 'translation', 'translationGradient', 'opening', 'handedness', 'reach', 'coarsegraininess', 'mutSize', 'mutProbGene']))
+		    return {
+		        'pattern': this.pattern, 
+		        'shape': this.shape, 
+		        'displacement': this.displacement, 
+		        'translation': this.translation, 
+		        'translationGradient': this.translationGradient, 
+		        'opening': this.opening, 
+		        'handedness': this.handedness, 
+		        'reach': this.reach, 
+		        'coarsegraininess': this.coarsegraininess, 
+		        'mutSize': this.mutSize, 
+		        'mutProbGene': this.mutProbGene
+		    }
 		}
 
+		Shell.rand100 = function() {
+		    return Math.trunc(Math.random * 100)
+		}
+		
+		
+		Shell.randInt = function(lower, upper) {
+		    return Math.trunc(Math.random() * (upper - lower) + lower)
+		}
+		
 		// The breeding process is relatively straighforward compared to the rest
 		// It looks at each gene and rolls a D100. If it's under the probability, then
 		// the gene will mutate by a factor of the mutSize
@@ -662,36 +712,37 @@
 
 			var child = this.getGenes()
 
-			if (_.random(0, 100) < child.mutProbGene) {
+			if (Shell.rand100() < child.mutProbGene) {
 				child.opening = Shell.mutateOpening(child.opening)
 			}
 
-			if (_.random(0, 100) < child.mutProbGene) {
-				child.displacement += _.random(-2, 2) * child.mutSize.displacement
+			if (Shell.rand100() < child.mutProbGene) {
+				child.displacement += Shell.randInt(-2, 2) * child.mutSize.displacement
 				child.displacement = Math.min(Math.max(child.displacement, 0), 1)
 			}
 
-			if (_.random(0, 100) < child.mutProbGene) {
-				child.translation += _.random(-2, 2) * child.mutSize.translation
+			if (Shell.rand100() < child.mutProbGene) {
+				child.translation += Shell.randInt(-2, 2) * child.mutSize.translation
 			}
 
-			if (_.random(0, 100) < 1) {
+			if (Shell.rand100() < 1) {
 				child.handedness = -child.handedness
 			}
 
 			// These three are in addition to the original program and offer a 
 			// little more visual variety
 
-			if (_.random(0, 100) < child.mutProbGene) {
-				child.shape += _.sample([-1, 1]) * child.mutSize.shape
+			if (Shell.rand100() < child.mutProbGene) {
+				child.shape += Shell.randomSign() * child.mutSize.shape
 			}
 
-			if (_.random(0, 100) < child.mutProbGene) {
-				child.reach += _.sample([-1, 1]) * child.mutSize.reach
+			if (Shell.rand100() < child.mutProbGene) {
+				child.reach += Shell.randomSign() * child.mutSize.reach
 			}
 
-			if (_.random(0, 100) < 5) {
-				child.pattern = _.sample(_.keys(Shell.patterns))
+			if (Shell.rand100() < 5) {
+			        var patternKeys = Shell.patterns.keys();
+			        child.pattern = patternKeys[Math.trunc(Math.random() * patternKeys.length)]
 			}
 
 			this.children.push(new Shell(this.ctx, this.canvasWidth, this.canvasHeight, child))
