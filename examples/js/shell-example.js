@@ -9,7 +9,7 @@ canvas.height = wHeight
 
 var ctx = canvas.getContext('2d')
 
-var bio = new Shell(ctx, wWidth, wHeight)
+var bio = new Shell(ctx, wWidth, wHeight, null)
 
 bio.draw()
 

@@ -9,7 +9,7 @@ canvas.height = wHeight
 
 var ctx = canvas.getContext('2d')
 
-var bio = new Biomorph(ctx, wWidth, wHeight)
+var bio = new Biomorph(ctx, wWidth, wHeight, null)
 
 bio.drawWithImages()
 
